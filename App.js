@@ -1,20 +1,26 @@
 import React, {useEffect} from 'react';
-import type {Node} from 'react';
-import {
-  Text,
-  View, 
-} from 'react-native';
+import 'react-native-gesture-handler';
+import {Text, View} from 'react-native';
+import {NavigationContainer} from '@react-navigation/native';
+import {createStackNavigator} from '@react-navigation/stack';
+import Home from './screens/Home'
+
+const Stack = createStackNavigator();
 
 const App = () => {
-
-useEffect(() => {
-
-}, [])
+  useEffect(() => {}, []);
 
   return (
-    <View>
-      <Text>Hola mundo</Text>
-    </View>
+    <>
+      <NavigationContainer>
+        <Stack.Navigator initialRouteName='Home'>
+          <Stack.Screen
+          name='Home'
+          component={Home}
+          />
+        </Stack.Navigator>
+      </NavigationContainer>
+    </>
   );
 };
 
