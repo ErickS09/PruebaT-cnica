@@ -1,24 +1,26 @@
 import React from 'react';
-import {View, Text, StyleSheet, Image} from 'react-native';
+import {View, Text, StyleSheet, Image, TouchableOpacity} from 'react-native';
 
-const Coins = ({data}) => {
+const Coins = ({data, onPres}) => {
   return (
-    <View style={styles.container}>
-      <View style={styles.coinContainer}>
-        <Image style={styles.image} source={{uri: data.image}} />
-        <Text style={styles.text}> {data.name}</Text>
+    <TouchableOpacity onPress={onPres}>
+      <View style={styles.container}>
+        <View style={styles.coinContainer}>
+          <Image style={styles.image} source={{uri: data.image}} />
+          <Text style={styles.text}> {data.name}</Text>
+        </View>
+        <View style={styles.containerPrice}>
+          <Text style={styles.price}>$ {data.current_price}</Text>
+          <Text
+            style={[
+              styles.priceChange,
+              data.price_change_percentage_24h > 0 ? styles.up : styles.down,
+            ]}>
+            {data.price_change_percentage_24h}
+          </Text>
+        </View>
       </View>
-      <View style={styles.containerPrice}>
-        <Text style={styles.price}>$ {data.current_price}</Text>
-        <Text
-          style={[
-            styles.priceChange,
-            data.price_change_percentage_24h > 0 ? styles.up : styles.down,
-          ]}>
-          {data.price_change_percentage_24h}
-        </Text>
-      </View>
-    </View>
+    </TouchableOpacity>
   );
 };
 
@@ -43,7 +45,7 @@ const styles = StyleSheet.create({
     height: 50,
   },
   text: {
-    fontSize: 20,
+    fontSize: 22,
     color: '#fff',
   },
   price: {

@@ -2,8 +2,12 @@ import React, {useState, useEffect} from 'react';
 import {View, StyleSheet, FlatList, Text, ScrollView} from 'react-native';
 import Coins from '../components/coins';
 
-const Home = () => {
+const Home = ({navigation}) => {
   const [bank, setBank] = useState([]);
+
+  const navegar = () => {
+    navigation.navigate('coins');
+  };
 
   const initialurl = async () => {
     const res = await fetch(
@@ -26,9 +30,9 @@ const Home = () => {
             console.log(item);
             return (
               <View>
-                <Coins data={item}></Coins>
+                <Coins data={item} onPres={() => {navigation.navigate('coins', { ...item })}}></Coins>
               </View>
-            )
+            );
           }}
         />
       </View>
