@@ -13,10 +13,6 @@ const Home = ({navigation}) => {
   const [bank, setBank] = useState([]);
   const [search, setSearch] = useState('');
 
-  const navegar = () => {
-    navigation.navigate('coins');
-  };
-
   const initialurl = async () => {
     const res = await fetch(
       'https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=100&page=1&sparkline=false',
@@ -37,7 +33,8 @@ const Home = ({navigation}) => {
             style={styles.search}
             placeholder="Search Coin"
             placeholderTextColor="#858585"
-            onChangeText={text => setSearch(text)}></TextInput>
+            onChangeText={text => setSearch(text)}
+          />
         </View>
         <FlatList
           style={styles.list}
@@ -54,7 +51,8 @@ const Home = ({navigation}) => {
                   data={item}
                   onPres={() => {
                     navigation.navigate('coins', {...item});
-                  }}></Coins>
+                  }}
+                />
               </View>
             );
           }}
@@ -77,7 +75,7 @@ const styles = StyleSheet.create({
     fontSize: 25,
     textAlign: 'center',
     padding: 5,
-    width: 180
+    width: 180,
   },
   list: {
     width: '100%',
