@@ -1,9 +1,17 @@
 import React, {useState, useEffect} from 'react';
-import {View, StyleSheet, FlatList, Text, ScrollView} from 'react-native';
+import {
+  View,
+  StyleSheet,
+  FlatList,
+  Text,
+  TextInput,
+  ScrollView,
+} from 'react-native';
 import Coins from '../components/coins';
 
 const Home = ({navigation}) => {
   const [bank, setBank] = useState([]);
+  const [search, setSearch] = useState('');
 
   const navegar = () => {
     navigation.navigate('coins');
@@ -23,14 +31,30 @@ const Home = ({navigation}) => {
 
   return (
     <ScrollView>
-      <View>
+      <View style={styles.container}>
+        <View>
+          <TextInput
+            style={styles.search}
+            placeholder="Search Coin"
+            placeholderTextColor="#858585"
+            onChangeText={text => setSearch(text)}></TextInput>
+        </View>
         <FlatList
-          data={bank}
+          style={styles.list}
+          data={bank.filter(
+            coin =>
+              coin.name.toLowerCase().includes(search) ||
+              coin.symbol.toLowerCase().includes(search),
+          )}
           renderItem={({item}) => {
             console.log(item);
             return (
               <View>
-                <Coins data={item} onPres={() => {navigation.navigate('coins', { ...item })}}></Coins>
+                <Coins
+                  data={item}
+                  onPres={() => {
+                    navigation.navigate('coins', {...item});
+                  }}></Coins>
               </View>
             );
           }}
@@ -45,6 +69,18 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
+  },
+  search: {
+    borderBottomColor: '#00DEFD',
+    borderBottomWidth: 1,
+    marginBottom: 15,
+    fontSize: 25,
+    textAlign: 'center',
+    padding: 5,
+    width: 180
+  },
+  list: {
+    width: '100%',
   },
 });
 
